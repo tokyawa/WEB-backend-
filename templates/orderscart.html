@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заявка - FLYCO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/orderscart.css' %}">
+</head>
+<body>
+    <section class="application-section">
+        <header class="logo-header" onclick="window.location.href='{% url 'homepage' %}'">
+            <img src="{% static 'assets/logo.svg' %}" alt="Company Logo" class="logo" loading="lazy">
+        </header>
+        <h2 class="section-title">Ваша заявка</h2>
+        <main class="application-container">
+            <form method="get" action="{% url 'orderscart' %}" role="search">
+                <label for="application-search" class="visually-hidden">Поиск</label>
+                <input type="search" name="search" id="application-search" class="search-input" placeholder="Поиск по районам..." aria-label="Поиск" value="{{ request.GET.search }}">
+            </form>
+            <ul class="application-list">
+                {% for district in districts %}
+                <li class="application-item">
+                    <div class="application-content">
+                        <div class="district-column">
+                            <div class="district-info">
+                                <p class="district-name">Район "{{ district.title }}"</p>
+                                <img src="{{ district.image_file }}" class="district-image" alt="Изображение района {{ district.title }}" width="800" height="170">
+                            </div>
+                        </div>
+                        <div class="application-details-column">
+                            <div class="application-details">
+                                <p>Заявка на пролет в районе: "{{ district.title }}"</p>
+                                <p>Дата: <input type="date" class="date-picker" aria-label="Выбрать дату"></p>
+                                <p>Статус: в работе</p>
+                                <p>Время начала полета: <input type="time" aria-label="Выбрать время начала полета"></p>
+                                <p>Дополнительная информация:</p>
+                                <textarea class="additional-info" placeholder="Введите текст..." aria-label="Дополнительная информация"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="application-item">
+                    <p>Заявка пуста. Добавьте районы на главной странице.</p>
+                </li>
+                {% endfor %}
+            </ul>
+            <form method="post" action="{% url 'clear_cart' %}">
+                {% csrf_token %}
+                <button type="submit" class="clear-button">Очистить</button>
+            </form>
+        </main>
+    </section>
+</body>
+</html>

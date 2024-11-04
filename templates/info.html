@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ district.title }} район</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/info.css' %}">
+</head>
+<body>
+    <header class="logo-header" onclick="window.location.href='{% url 'homepage' %}'">
+        <img src="{% static 'assets/logo.svg' %}" alt="Company Logo" class="logo" loading="lazy">
+    </header>
+    <main class="academic-district">
+        <div class="content-wrapper">
+            <article class="district-info">
+                <div class="info-container">
+                    <div class="text-column">
+                        <div class="district-details">
+                            <h2 class="district-name">Район "{{ district.title }}"</h2>
+                            <p class="flight-duration">Пролет по времени занимает: <br>{{ district.flight_time }}</p>
+                        </div>
+                    </div>
+                    <div class="image-column">
+                        <img src="{{ district.image_file }}" class="district-image" alt="{{ district.title }}">
+                    </div>
+                </div>
+            </article>
+            <h3 class="section-title">О районе</h3>
+            <hr class="divider">
+            <p class="district-description">{{ district.info }}</p>
+        </div>
+    </main>
+</body>
+</html>

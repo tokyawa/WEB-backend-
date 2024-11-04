@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <section class="mainpage">
+        <header class="logo-header" onclick="window.location.href='{% url 'homepage' %}'">
+            <img src="{% static 'assets/logo.svg' %}" alt="Company Logo" class="logo" loading="lazy">
+        </header>
+        <section class="info-section">
+            <h1 class="main-heading">Мы пролетаем с заботой о Вас!</h1>
+            <p class="sub-heading">Наши дроны оснащены передовыми технологиями, которые позволяют передвигаться абсолютно безопасно и быстро по городской местности!</p>
+        </section>
+        <div class="search-bar" role="search">
+            <form method="get" action="{% url 'homepage' %}">
+                <input type="search" class="search-input" name="districtSearch" placeholder="Поиск района..." aria-label="Поиск района" value="{{ request.GET.districtSearch }}">
+            </form>
+        </div>
+
+        <main class="main-content">
+            <div class="header-container">
+                <h2 class="districts-title">Районы</h2>
+                <img src="{% static 'assets/orderscart.svg' %}" alt="Cart" class="orders-cart" loading="lazy" onclick="window.location.href='{% url 'orderscart' %}'">
+            </div>
+            <div class="districts-grid" id="districtGrid">
+                {% for district in districts %}
+                <article class="district-card" data-name="{{ district.title|lower }}">
+                    <h3 class="district-name">Район "{{ district.title }}"</h3>
+                    <a href="{% url 'district_info' district.id %}">
+                        <img src="{{ district.image_file }}" alt="{{ district.title }} район" class="district-image" loading="lazy">
+                    </a>
+                    <p class="flight-time">Пролет: {{ district.flight_time }}</p>
+                    <form method="post" action="{% url 'add_to_cart' district.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="add-button">Добавить</button>
+                    </form>
+                </article>
+                {% endfor %}
+            </div>
+        </main>
+    </section>
+</body>
+</html>

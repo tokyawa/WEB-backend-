@@ -7,10 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/info.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <header class="logo-header" onclick="window.location.href='{% url 'homepage' %}'">
-        <img src="{% static 'assets/logo.svg' %}" alt="Company Logo" class="logo" loading="lazy">
+    <header class="logo-header">
+        <a href="{% url 'district_list' %}" style="text-decoration: none;display: flex; align-items: center;outline: none;">
+                <img src="{% static 'assets/logo.png' %}" alt="Company Logo" class="logo" loading="lazy">
+        </a>
+        <h2>FLYCO</h2>
     </header>
     <main class="academic-district">
         <div class="content-wrapper">
@@ -23,7 +27,7 @@
                         </div>
                     </div>
                     <div class="image-column">
-                        <img src="{{ district.image_file }}" class="district-image" alt="{{ district.title }}">
+                        <img src="{{ district.image_url }}" class="district-image" alt="{{ district.title }}">
                     </div>
                 </div>
             </article>

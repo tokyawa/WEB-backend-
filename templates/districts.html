@@ -10,36 +10,45 @@
 </head>
 <body>
     <section class="mainpage">
-        <header class="logo-header" onclick="window.location.href='{% url 'homepage' %}'">
-            <img src="{% static 'assets/logo.svg' %}" alt="Company Logo" class="logo" loading="lazy">
+        <header class="logo-header">
+            <a href="{% url 'district_list' %}" style="text-decoration: none;display: flex; align-items: center;outline: none;">
+                <img src="{% static 'assets/logo.png' %}" alt="Company Logo" class="logo" loading="lazy">
+            </a>
+            <h2>FLYCO</h2>
         </header>
         <section class="info-section">
             <h1 class="main-heading">Мы пролетаем с заботой о Вас!</h1>
             <p class="sub-heading">Наши дроны оснащены передовыми технологиями, которые позволяют передвигаться абсолютно безопасно и быстро по городской местности!</p>
         </section>
         <div class="search-bar" role="search">
-            <form method="get" action="{% url 'homepage' %}">
-                <input type="search" class="search-input" name="districtSearch" placeholder="Поиск района..." aria-label="Поиск района" value="{{ request.GET.districtSearch }}">
+            <form method="get" action="{% url 'district_list' %}">
+                <input type="search" class="search-input" name="search_district" placeholder="Поиск района..."
+                       aria-label="Поиск района" value="{{ request.GET.search_district }}"
+                       style="border: none; outline: none;"
+                >
             </form>
         </div>
 
         <main class="main-content">
             <div class="header-container">
                 <h2 class="districts-title">Районы</h2>
-                <img src="{% static 'assets/orderscart.svg' %}" alt="Cart" class="orders-cart" loading="lazy" onclick="window.location.href='{% url 'orderscart' %}'">
+                <div class="shop-back">
+                    <a href="{% url 'zone' zone_id=zone_id %}" class="contentShopImage" style="text-decoration: none">
+                        <img class="shop-icon" src="{% static 'assets/buying cart.png' %}" alt="Shopping Bag Icon" />
+                    </a>
+                    <div class="item-count">{{ count }}</div>
+                </div>
+
             </div>
             <div class="districts-grid" id="districtGrid">
                 {% for district in districts %}
                 <article class="district-card" data-name="{{ district.title|lower }}">
                     <h3 class="district-name">Район "{{ district.title }}"</h3>
-                    <a href="{% url 'district_info' district.id %}">
-                        <img src="{{ district.image_file }}" alt="{{ district.title }} район" class="district-image" loading="lazy">
+                    <a href="{% url 'district_about' district.id %}">
+                        <img src="{{ district.image_url }}" alt="{{ district.title }} район" class="district-image" loading="lazy">
                     </a>
                     <p class="flight-time">Пролет: {{ district.flight_time }}</p>
-                    <form method="post" action="{% url 'add_to_cart' district.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="add-button">Добавить</button>
-                    </form>
+                   
                 </article>
                 {% endfor %}
             </div>

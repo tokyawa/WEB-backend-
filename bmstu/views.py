@@ -1,88 +1,108 @@
-from django.shortcuts import render, redirect
-from django.conf import settings
+from django.http import HttpResponseNotFound
+from django.shortcuts import render
 
-MINIO_BASE_URL = f'{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/'
 
+
+
+
+zones = [
+    {
+        'id': 1,
+        'title': 'Утренний обзор района',
+        'districts': [
+            {'id': 1, 'description': 'Район с высокой плотностью городских объектов. Ограничение высоты полета: 120 м.'},
+            {'id': 2, 'description': 'Преимущественно жилая зона с торговыми центрами. Ограничение высоты полета: 100 м.'},
+            {'id': 3, 'description': 'Район с высокой плотностью городских объектов. Ограничение высоты полета: 120 м.'},
+        ]
+    },
+    {
+        'id': 2,
+        'title': 'Рейд по ключевым объектам',
+        'districts': [
+            {'id': 1, 'description': 'Район с парковыми зонами и административными зданиями. Ограничение высоты полета: 80 м.'},
+            {'id': 2, 'description': 'Район с парковыми зонами и административными зданиями. Ограничение высоты полета: 80 м.'},
+            {'id': 3, 'description': 'Преимущественно жилая зона с торговыми центрами. Ограничение высоты полета: 100 м.'},
+            {'id': 4, 'description': 'Преимущественно жилая зона с торговыми центрами. Ограничение высоты полета: 100 м.'},
+        ]
+    },
+]
 # Статические данные о районах
 districts = [
     {
         'id': 1,
-        'name': 'академический',
         'title': 'Академический',
-        'image_file': f'{MINIO_BASE_URL}akademicheskiy.jpg',
+        'image_url': 'http://localhost:9000/dronesproject/1.png',
         'flight_time': '2 часа 45 минут',
-        'info': 'Академический район — это центр знаний с научными учреждениями!',
+        'info': 'Академический район Москвы – одно из самых зелёных мест для проживания в столице. Он расположен на юго-западе города, на небольшом расстоянии от центра. Район поражает историческим обликом и уютом тихих дворов. Каждый дворик словно создан для бесед в тени зелёных и раскидистых деревьев, где профессоры и люди из сферы культуры могут обсуждать научные темы или говорить об искусстве.',
     },
     {
         'id': 2,
-        'name': 'алексеевский',
         'title': 'Алексеевский',
-        'image_file': f'{MINIO_BASE_URL}alekseevskoe.jpg',
+        'image_url': 'http://localhost:9000/dronesproject/2.png',
         'flight_time': '1 час 30 минут',
-        'info': 'Алексеевский район — это уютный район с парками, жилыми кварталами и развитой инфраструктурой.',
+        'info': 'Академический район Москвы – одно из самых зелёных мест для проживания в столице. Он расположен на юго-западе города, на небольшом расстоянии от центра. Район поражает историческим обликом и уютом тихих дворов. Каждый дворик словно создан для бесед в тени зелёных и раскидистых деревьев, где профессоры и люди из сферы культуры могут обсуждать научные темы или говорить об искусстве.',
     },
     {
         'id': 3,
-        'name': 'алтуфьевский',
         'title': 'Алтуфьевский',
-        'image_file': f'{MINIO_BASE_URL}altufyevskoe.jpg',
+        'image_url': 'http://localhost:9000/dronesproject/3.png',
         'flight_time': '1 час 20 минут',
-        'info': 'Алтуфьевский район — это зеленый и спокойный район с жилыми кварталами, парками.',
+        'info': 'Академический район Москвы – одно из самых зелёных мест для проживания в столице. Он расположен на юго-западе города, на небольшом расстоянии от центра. Район поражает историческим обликом и уютом тихих дворов. Каждый дворик словно создан для бесед в тени зелёных и раскидистых деревьев, где профессоры и люди из сферы культуры могут обсуждать научные темы или говорить об искусстве.',
     },
     {
         'id': 4,
-        'name': 'арбат',
         'title': 'Арбат',
-        'image_file': f'{MINIO_BASE_URL}arbat.jpg',
+        'image_url': 'http://localhost:9000/dronesproject/4.png',
         'flight_time': '25 минут',
-        'info': 'Арбат — исторический район Москвы с живописными улочками, культурными памятниками.',
+        'info': 'Академический район Москвы – одно из самых зелёных мест для проживания в столице. Он расположен на юго-западе города, на небольшом расстоянии от центра. Район поражает историческим обликом и уютом тихих дворов. Каждый дворик словно создан для бесед в тени зелёных и раскидистых деревьев, где профессоры и люди из сферы культуры могут обсуждать научные темы или говорить об искусстве.',
     },
     {
         'id': 5,
-        'name': 'аэропорт',
         'title': 'Аэропорт',
-        'image_file': f'{MINIO_BASE_URL}aeroport.jpg',
+        'image_url': 'http://localhost:9000/dronesproject/5.png',
         'flight_time': '1 час 15 минут',
-        'info': 'Аэропорт — динамичный район с развитой транспортной инфраструктурой...',
+        'info': 'Академический район Москвы – одно из самых зелёных мест для проживания в столице. Он расположен на юго-западе города, на небольшом расстоянии от центра. Район поражает историческим обликом и уютом тихих дворов. Каждый дворик словно создан для бесед в тени зелёных и раскидистых деревьев, где профессоры и люди из сферы культуры могут обсуждать научные темы или говорить об искусстве.',
     },
     {
         'id': 6,
-        'name': 'беговой',
         'title': 'Беговой',
-        'image_file': f'{MINIO_BASE_URL}begovoe.jpg',
+        'image_url': 'http://localhost:9000/dronesproject/6.png',
         'flight_time': '1 час 55 минут',
-        'info': 'Беговой район — зелёное и спокойное место с удобной инфраструктурой...',
+        'info': 'Академический район Москвы – одно из самых зелёных мест для проживания в столице. Он расположен на юго-западе города, на небольшом расстоянии от центра. Район поражает историческим обликом и уютом тихих дворов. Каждый дворик словно создан для бесед в тени зелёных и раскидистых деревьев, где профессоры и люди из сферы культуры могут обсуждать научные темы или говорить об искусстве.',
     },
 ]
 
-def homepage(request):
-    search_query = request.GET.get('districtSearch', '').lower()
-    filtered_districts = [district for district in districts if search_query in district['title'].lower()] if search_query else districts
-    return render(request, 'homepage.html', {'districts': filtered_districts})
-
-def info(request, district_id):
-    district_info = next((district for district in districts if district['id'] == int(district_id)), None)
-    return render(request, 'info.html', {'district': district_info})
+def district_list(request):
+    query = request.GET.get('search_district', '').lower()
+    filtered_districts = [item for item in districts if query in item['title'].lower()] if query else districts
+    count = len(zones[0]['districts'])
+    zone_id = zones[0]['id']
 
 
-def orders_cart(request):
-    cart = request.session.get('cart', [])
-    search_query = request.GET.get('search', '').lower()
-    districts_in_cart = [district for district in districts if district['id'] in cart]
-    if search_query:
-        districts_in_cart = [district for district in districts_in_cart if search_query in district['title'].lower()]
+    return render(request, 'districts.html', {'districts': filtered_districts,'count': count,'zone_id': zone_id})
 
-    return render(request, 'orderscart.html', {'districts': districts_in_cart})
+def district_about(request, id):
+    district = next((item for item in districts if item['id'] == id), None)
 
-def add_to_cart(request, district_id):
-    cart = request.session.get('cart', [])
-    if district_id not in cart:
-        cart.append(district_id)
-    request.session['cart'] = cart
-    return redirect('homepage')
+    return render(request, 'about_district.html', {'district': district})
 
-def clear_cart(request):
-    # Очищаем корзину, просто удаляем ее из сессии
-    if 'cart' in request.session:
-        del request.session['cart']  # Удаляем корзину из сессии
-    return redirect('orderscart')  # Перенаправляем на страницу корзины
+
+def zone(request,zone_id):
+    zone = next((r for r in zones if r['id'] == zone_id), None)
+    if not zone:
+        return HttpResponseNotFound("Recipe not found")
+
+    cart_items = []
+
+    for district_item in zone['districts']:
+        district = next((i for i in districts if i['id'] == district_item['id']), None)
+        if district:
+            image_url = district.get('image_url', '')
+            cart_items.append({
+                'title': district['title'],
+                'image_url': image_url,
+                'description': district_item['description'],
+            })
+
+
+    return render(request, 'zones.html',{'cart_items': cart_items, 'zone_title': zone['title']})

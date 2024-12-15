@@ -21,9 +21,40 @@ body {
     box-sizing: border-box;
 }
 .logo {
-    width: 300px;
-    max-width: 100%;
+    width: 64px;
+    height: 100%;
 }
+.shop-back {
+    position: absolute; /* Абсолютное позиционирование */
+    right: 0; /* Устанавливаем иконку прямо у правого края */
+    top: 50%; /* Центрируем по вертикали относительно контейнера */
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.shop-icon {
+    width: 64px; /* Размер иконки */
+    height: 64px; /* Делаем высоту равной ширине для круга */
+    background-color: #f0f7fa; /* Цвет фона */
+    border-radius: 50%; /* Делаем фон круглым */
+    padding: 5px; /* Внутренние отступы */
+    box-sizing: border-box; /* Включаем паддинг в размер элемента */
+}
+
+.item-count {
+    position: absolute;
+    top: 0; /* Сверху */
+    right: 10px; /* Справа */
+    background-color: #34495e; /* Цвет фона для счетчика */
+    color: white; /* Цвет текста */
+    border-radius: 50%; /* Скругление для круга */
+    padding: 2px 6px; /* Отступы внутри счетчика */
+    font-size: 12px; /* Размер текста */
+
+    transform: translate(50%, -50%); /* Коррекция позиции */
+}
+
 .main-content {
     background-color: #fff;
     border-radius: 40px;

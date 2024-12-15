@@ -127,16 +127,3 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
-
-# Установите базовые данные для доступа к MinIO
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-AWS_ACCESS_KEY_ID = 'minio'         # Ваш доступ к MinIO
-AWS_SECRET_ACCESS_KEY = 'minio124'        # Ваш секретный ключ MinIO
-AWS_STORAGE_BUCKET_NAME = 'dronesproject'           # Название бакета в MinIO
-AWS_S3_ENDPOINT_URL = 'http://localhost:9000'          # URL для доступа к MinIO
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',                   # Кеширование для лучшего быстродействия
-}
-AWS_QUERYSTRING_AUTH = False                           # Отключение query-параметров в ссылке
-
-MINIO_BASE_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}'

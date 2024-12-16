@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+<section class="mainpage">
+    <header class="logo-header">
+        <a href="{% url 'district_list' %}"
+           style="text-decoration: none;display: flex; align-items: center;outline: none;">
+            <img src="{% static 'assets/logo.png' %}" alt="Company Logo" class="logo" loading="lazy">
+        </a>
+        <h2>FLYCO</h2>
+    </header>
+    <section class="info-section">
+        <h1 class="main-heading">Мы пролетаем с заботой о Вас!</h1>
+        <p class="sub-heading">Наши дроны оснащены передовыми технологиями, которые позволяют передвигаться абсолютно
+            безопасно и быстро по городской местности!</p>
+    </section>
+    <div class="search-bar" role="search">
+        <form method="get" action="{% url 'district_list' %}">
+            <input type="search" class="search-input" name="search_district" placeholder="Поиск района..."
+                   aria-label="Поиск района" value="{{ request.GET.search_district }}"
+                   style="border: none; outline: none;"
+            >
+        </form>
+    </div>
+
+    <main class="main-content">
+        <div class="header-container">
+            <h2 class="districts-title">Районы</h2>
+            <div class="shop-back">
+                <a href="{% if current_zone_id %}{% url 'zone' zone_id=current_zone_id %}{% else %}#{% endif %}"
+                   class="contentShopImage"
+                   style="text-decoration: none;pointer-events: {% if not current_zone_id %}none{% endif %}; opacity: {% if not current_zone_id %}0{% endif %};">
+                    <img class="shop-icon "
+                         src="{% static 'assets/buying cart.png' %}" alt="Shopping Bag Icon"/>
+                </a>
+                {% if count > 0 %}
+                <div class="item-count">{{ count }}</div>
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="districts-grid" id="districtGrid">
+            {% for district in districts %}
+                <article class="district-card" data-name="{{ district.district_name|lower }}">
+                    <h3 class="district-name">Район "{{ district.district_name }}"</h3>
+                    <a href="{% url 'district_about' district.id %}">
+                        <img src="{{ district.image_url }}" alt="{{ district.district_name }} район" class="district-image"
+                             loading="lazy">
+                    </a>
+                    <p class="flight-time">Пролет: {{ district.formatted_flight_time }}</p>
+                    <form method="post" action="{% url 'add_district_to_current_zone' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="district_id" value="{{ district.id }}">
+                                <input type="hidden" name="zone_id" value="{{ current_zone_id }}">
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="add-button">Добавить</button>
+                    </form>
+                </article>
+            {% endfor %}
+        </div>
+    </main>
+</section>
+</body>
+</html>

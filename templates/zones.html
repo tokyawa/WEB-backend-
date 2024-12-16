@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заявка - FLYCO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/orderscart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <section class="application-section">
+        <header class="logo-header">
+           <a href="{% url 'district_list' %}" style="text-decoration: none;display: flex; align-items: center;outline: none;">
+                <img src="{% static 'assets/logo.png' %}" alt="Company Logo" class="logo" loading="lazy">
+            </a>
+            <h2>FLYCO</h2>
+        </header>
+        <h2 class="section-title">{{ zone_title}}</h2>
+        <main class="application-container">
+
+            <ul class="application-list">
+                {% for item in cart_items %}
+                <li class="application-item">
+                    <div class="application-content">
+                        <div class="district-column">
+                            <div class="district-info">
+                                <p class="district-name">Район "{{ item.title }}"</p>
+                                <img src="{{ item.image_url }}" class="district-image" alt="Изображение района {{ item.title }}" width="800" height="170">
+                            </div>
+                        </div>
+                        <div class="application-details-column">
+                            <div class="application-details">
+                                <p>Заявка на пролет в районе: "{{ item.title }}"</p>
+                                <p>Время пролета: {{ item.flight_time }}</p>
+                              <p>Приоритет:
+                                    <select name="priority" >
+                                        <option value="high" {% if item.priority == 'high' %}selected{% endif %}>Высокий</option>
+                                        <option value="medium" {% if item.priority == 'medium' %}selected{% endif %}>Средний</option>
+                                        <option value="low" {% if item.priority == 'low' %}selected{% endif %}>Низкий</option>
+                                    </select>
+                                </p>
+                                <p>Ключевой район:
+                                    <input type="checkbox" {% if item.is_main %}checked{% endif %}>
+                                </p>
+                                <p>Дополнительная информация:</p>
+                                <p class="additional-info" aria-label="Дополнительная информация">{{ item.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <h3 style="text-align: right">Общая длительность пролета: {{ total_flight_time }}</h3>
+        <div style="text-align: right">
+            <form method="post" action="{% url 'delete_zone' %}">
+                  {% csrf_token %}
+              <input type="hidden" name="zone_id" value="{{ current_zone_id }}">
+              <button type="submit" class="delete-button">Удалить пролет</button>
+              </form>
+
+         </div>
+        </main>
+    </section>
+</body>
+</html>

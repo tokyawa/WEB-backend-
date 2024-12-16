@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ district.title }} район</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/info.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <header class="logo-header">
+        <a href="{% url 'district_list' %}" style="text-decoration: none;display: flex; align-items: center;outline: none;">
+                <img src="{% static 'assets/logo.png' %}" alt="Company Logo" class="logo" loading="lazy">
+        </a>
+        <h2>FLYCO</h2>
+    </header>
+    <main class="academic-district">
+        <div class="content-wrapper">
+            <article class="district-info">
+                <div class="info-container">
+                    <div class="text-column">
+                        <div class="district-details">
+                            <h2 class="district-name">Район "{{ district.district_name }}"</h2>
+                            <p class="flight-duration">Пролет по времени занимает: <br>{{ district.formatted_flight_time }}</p>
+                        </div>
+                    </div>
+                    <div class="image-column">
+                        <img src="{{ district.image_url }}" class="district-image" alt="{{ district.district_name }}">
+                    </div>
+                </div>
+            </article>
+            <h3 class="section-title">О районе</h3>
+            <hr class="divider">
+            <p class="district-description">{{ district.description }}</p>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,171 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.logo-header {
+    background-color: #34495e;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 300px;
+    max-width: 100%;
+}
+
+.company-name {
+    flex-grow: 1;
+    margin: 0 0 0 20px;
+    color: #fff;
+    font: 400 24px Kanit, sans-serif;
+}
+
+.academic-district {
+    background-color: #f0f7fa;
+    display: flex;
+    padding: 70px 56px 100px;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.content-wrapper {
+    display: flex;
+    margin-top: 40px;
+    width: 100%;
+    flex-direction: column;
+}
+
+.district-info {
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    padding: 20px 40px;
+}
+
+.info-container {
+    display: flex;
+    gap: 20px;
+}
+
+.text-column {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.district-details {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    text-align: center;
+    font-size: 24px;
+}
+
+.district-name {
+    font-weight: 700;
+    align-self: center;
+}
+
+.flight-duration {
+    font-weight: 300;
+    margin-top: 20px;
+}
+
+.image-column {
+    display: flex;
+    flex-direction: column;
+    width: 32%;
+}
+
+.district-image {
+    aspect-ratio: 1.02;
+    object-fit: cover;
+    width: 72%;
+    border-radius: 10px;
+}
+
+.section-title {
+    color: #000;
+    text-align: center;
+    align-self: start;
+    margin-top: 40px;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.divider {
+    height: 3px;
+    margin-top: 20px;
+    width: 100%;
+    background-color: #000;
+    border: none;
+}
+
+.district-description {
+    color: #000;
+    align-self: center;
+    margin-top: 40px;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+@media (max-width: 991px) {
+    .academic-district {
+        padding: 70px 20px 60px;
+    }
+    .logo-header {
+        font-size: 20px;
+        padding: 5px 10px;
+        height: 60px; /* Поддержка высоты хедера */
+    }
+    .company-name {
+        max-width: 100%;
+        font-size: 20px;
+    }
+    .content-wrapper {
+        max-width: 100%;
+        margin-top: 30px;
+    }
+    .district-info {
+        max-width: 100%;
+        padding: 15px;
+    }
+    .info-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    .text-column, .image-column {
+        width: 100%;
+    }
+    .district-details {
+        max-width: 100%;
+        margin-top: 20px;
+        font-size: 20px;
+    }
+    .district-name, .flight-duration {
+        max-width: 100%;
+    }
+    .flight-duration {
+        margin-top: 15px;
+    }
+    .district-image {
+        margin-top: 15px;
+    }
+    .section-title, .divider, .district-description {
+        max-width: 100%;
+        margin-top: 30px;
+    }
+    .section-title {
+        font-size: 24px;
+    }
+    .district-description {
+        font-size: 16px;
+    }
+}
